@@ -1,0 +1,38 @@
+*{
+    background-color: antiquewhite;
+    padding: 0;
+    margin: 0;
+}
+header{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+    
+.high-score {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 50px;
+}
+
+.timer {
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 50px;
+}
+.question-card{
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 57px;
+    align-items: baseline;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-around;
+
+}
+.question{
+    text-align: center;
+    font-weight: bold;
+}
