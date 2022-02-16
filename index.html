@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,33 +8,30 @@
     <link rel="stylesheet" href="./assets/styles.css">
     <title>Java Timed Quiz</title>
 </head>
+
 <body>
-    <header>
-        <div class="high-score">View high scores</div>
-        <time class="timer">12:51</time>
-    </header>
 
-    <section class="question-card">
-        <div class="question"> Question </div>
-        <ol>
-            <li>applesuace</li>
-            <li>pinapple</li>
-            <li>cow</li>
-            <li>doughnut</li>
-        </ol>
-    </section>
-    
-    
+    <div class="container">
+        <div id="question-container" class="hide">
+            <div>Timer: <span id="timer"class="countdown-timer"></span></div>
+            <div id="question">Question</div>
+            <div id="answer-btn" class="btn-layout">
+                <button class="btn">Answer1</button>
+                <button class="btn">Answer2</button>
+                <button class="btn">Answer3</button>
+                <button class="btn">Answer4</button>
 
-
-
-
-
-
-
-
-
-
+            </div>
+        </div>
+        <div class="controls">
+            <button id="high-score" class="high-score-btn btn">High Scores</button>
+        </div>
+        <div class="controls">
+            <button id="start" class="start-btn btn">Start</button>
+            <button id="next" class="next-btn btn hide">Next</button>
+        </div>
+    </div>
     <script src="./assets/script.js"></script>
 </body>
+
 </html>

@@ -1,38 +1,91 @@
-*{
+*, *::before, *::after{
+    box-sizing: border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: antiquewhite;
     padding: 0;
     margin: 0;
 }
-header{
+
+body{
+    padding: 0;
+    margin: 0;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
     
-.high-score {
-    text-align: left;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 50px;
 }
-
-.timer {
-    text-align: right;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 50px;
-}
-.question-card{
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 57px;
-    align-items: baseline;
-    flex-direction: column;
-    align-content: center;
-    justify-content: space-around;
-
-}
-.question{
+#question{
     text-align: center;
+    font-size: 52px;
+}
+.container  {
+    width: 900px;
+    max-width: 80%;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px 2px; 
+    
+}
+.btn-grid {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0;
+    grid-template-columns: repeat(2, auto);
+}
+.btn {
+    margin: 15px;
+    border: 2pxpx solid rgb(0, 60, 255);
+    background-color: rgb(0, 60, 255);
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: white;
+    outline: none;
+    font-size: 18px;
+    box-shadow: 5px 5px 5px 5px grey;
+}
+.btn:hover {
+    border-color: black;
+}
+.btn.correct {
+    background-color: green;
+    color: black;
+}
+.btn.wrong {
+    background-color: red;
+    color: black;
+}
+#answer-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: stretch;
+    padding: 25px;
+    margin: 35px;
+    
+}
+.start-btn, .next-btn, .high-score-btn{
+    font-size: 18px;
     font-weight: bold;
+    padding: 10px 20px;
+    width: 80%;
+}
+.controls {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
+
+.countdown-timer {
+    font-size: 25px;
+    float: right;
+    top: 50px;
+    right: 50px;
+
 }
