@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Tahoma, sans-serif, sans-serif;
+}
+
+body{
+    background: green;
+}
+
+::selection{
+    color: #fff;
+    background: green;
+}
+
+header a{
+    color: black;
+    font-size: 50px;
+    font-weight: bolder;
+}
+
+.high-scores {
+    position: absolute;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+                0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+.score-wrapper {
+    flex: 1;
+    margin: 0 20px 20px;
+  }
+  
+  .score-title {
+    color: black;
+    font-size: 2.6rem;
+  }
+  
+  .score-list {
+    list-style: none;
+    padding: 15px;
+    height: calc(100% - 50px);
+    
+    border-radius: 12px;
+    border: 2px solid var(--grey);
+  }
+  
+  .score {
+    color: black;
+  }
