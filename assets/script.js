@@ -1,52 +1,287 @@
-
-var questions = [
+let questions = [
     {
-        question: 'Inside which HTML element do we put the JavaScript?',
-        answers: ['<script>','<javascript>','<js>','<scripting>'],
-        correctAnswer: '<script>'
-
+        numb: 1,
+        question: "Inside which HTML element do we put the JavaScript?",
+        answer: "script",
+        options: [
+            "script",
+            "javascript",
+            "js",
+            "scripting"
+        ]
     },
     {
+        numb: 2,
+        question: "What does CSS stand for?",
+        answer: "Cascading Style Sheet",
+        options: [
+            "Common Style Sheet",
+            "Colorful Style Sheet",
+            "Computer Style Sheet",
+            "Cascading Style Sheet"
+        ]
+    },
+    {
+        numb: 3,
         question: 'What is the correct JavaScript syntax to change the content of the HTML element below?',
-        answers: ['document.getElement("p").innerHTML = "Hello World!"', 'document.getElementById("demo").innerHTML = "Hello World!"','document.getElementByName("p").innerHTML = "Hello World!"','#demo.innerHTML = "Hello World!"'],
-        correctAnswer: 'document.getElementById("demo").innerHTML = "Hello World!"'
+        answer: 'document.getElementById("demo").innerHTML = "Hello World!"',
+        options: [
+            'document.getElement("p").innerHTML = "Hello World!"',
+            'document.getElementById("demo").innerHTML = "Hello World!"',
+            'document.getElementByName("p").innerHTML = "Hello World!"',
+            '#demo.innerHTML = "Hello World!"'
+        ]
     },
     {
-        question: 'Where is the correct place to insert a JavaScript?',
-        answers: ['Both the <head> section and the <body> section are correct','The <body> section', 'The <head> section'],
-        correctAnswer: 'Both the <head> section and the <body> section are correct'
+        numb: 4,
+        question: "What does SQL stand for?",
+        answer: "Structured Query Language",
+        options: [
+            "Stylish Question Language",
+            "Stylesheet Query Language",
+            "Statement Question Language",
+            "Structured Query Language"
+        ]
     },
     {
+        numb: 5,
         question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
-        answers: ['<script src="xxx.js">', '<script href="xxx.js">', '<script name="xxx.js">'],
-        correctAnswer: '<script src="xxx.js">'
+        answer: 'script src="xxx.js"',
+        options: [
+            'script src="xxx.js"',
+            'script href="xxx.js"',
+            'script name="xxx.js"',
+            'script = "xxx.js"'
+        ]
     },
     {
-        question: 'The external JavaScript file must contain the <script> tag.',
-        answers: ['True', 'False'],
-        correctAnswer:'False'
+        numb: 6,
+        question: 'Where is the correct place to insert a JavaScript?',
+        answer: 'Both the head section and the body section are correct',
+        options: [
+            'Both the head section and the body section are correct',
+            'The <body> section',
+            'The <head> section',
+            'JavaScript does not need to be inserted'
+        ]
     }
 ];
 
 
-function beginQuiz(){
-    timeKeeper();
-    createQuestion();
+//selecting all required elements
+const start_btn = document.querySelector(".start_btn button");
+const info_box = document.querySelector(".info_box");
+const exit_btn = info_box.querySelector(".buttons .quit");
+const continue_btn = info_box.querySelector(".buttons .restart");
+const quiz_box = document.querySelector(".quiz_box");
+const result_box = document.querySelector(".result_box");
+const option_list = document.querySelector(".option_list");
+const timeText = document.querySelector(".timer .time_left_txt");
+const timeCount = document.querySelector(".timer .timer_sec");
+
+// when start button clicked
+start_btn.onclick = () => {
+    info_box.classList.add("activeInfo"); //show info box
 }
 
-function timeKeeper(duration, display) {
-    var timeInterval  = setInterval(function(){
-        secondsLeft --;
-        timer.textContent = "Time Remaining: " + secondsLeft + " sec";
+// when exit button clicked
+exit_btn.onclick = () => {
+    info_box.classList.remove("activeInfo"); //hide info box
+}
 
-        if(secondsLeft <= 0 || (questionIndex > totalQuestions - 1 )){
-            result.style.display = "none";
-            quizContent.style.display = "none";
-            viewResults();
-            clearInterval(timeInterval);
-            timer.textContent = "";
+// if continueQuiz button clicked
+continue_btn.onclick = () => {
+    info_box.classList.remove("activeInfo"); //hide info box
+    quiz_box.classList.add("activeQuiz"); //show quiz box
+    showQuetions(0); //calling showQestions function
+    queCounter(1); //passing 1 parameter to queCounter
+    startTimer(50); //calling startTimer function
+}
+
+let timeValue = 50;
+let que_count = 0;
+let que_numb = 1;
+let userScore = 0;
+let counter;
+let counterLine;
+let widthValue = 0;
+
+const restart_quiz = result_box.querySelector(".buttons .restart");
+const quit_quiz = result_box.querySelector(".buttons .quit");
+
+// if restart button is clicked
+restart_quiz.onclick = () => {
+    quiz_box.classList.add("activeQuiz"); //show the quiz box
+    result_box.classList.remove("activeResult"); //hides the  result box
+    timeValue = 50;
+    que_count = 0;
+    que_numb = 1;
+    userScore = 0;
+    widthValue = 0;
+    showQuetions(que_count); //calling showQestions function
+    queCounter(que_numb); //passing que_numb value to queCounter
+    clearInterval(counter); //clear counter
+    startTimer(timeValue); //calling startTimer function
+    timeText.textContent = "Time Left"; //change the text of timeText to Time Left
+    next_btn.classList.remove("show"); //hide the next button
+}
+
+// if quitQuiz button clicked
+quit_quiz.onclick = () => {
+    window.location.reload(); //reload the current window
+}
+
+const next_btn = document.querySelector("footer .next_btn");
+const bottom_ques_counter = document.querySelector("footer .total_que");
+
+// if Next Que button clicked
+next_btn.onclick = () => {
+    if (que_count < questions.length - 1) { //if question count is less than total question length
+        que_count++; //increment the que_count value
+        que_numb++; //increment the que_numb value
+        showQuetions(que_count); //calling showQestions function
+        queCounter(que_numb); //passing que_numb value to queCounter
+        clearInterval(counter); //clear counter
+        startTimer(timeValue); //calling startTimer function
+        timeText.textContent = "Time Left"; //change the timeText to Time Left
+        next_btn.classList.remove("show"); //hide the next button
+    } else {
+        clearInterval(counter); //clear counter
+        showResult(); //calling showResult function
+    }
+}
+
+// getting questions and options from array
+function showQuetions(index) {
+    const que_text = document.querySelector(".que_text");
+
+    //creating a new span and div tag for question and option and passing the value using array index
+    let que_tag = '<span>' + questions[index].numb + ". " + questions[index].question + '</span>';
+    let option_tag = '<div class="option"><span>' + questions[index].options[0] + '</span></div>'
+        + '<div class="option"><span>' + questions[index].options[1] + '</span></div>'
+        + '<div class="option"><span>' + questions[index].options[2] + '</span></div>'
+        + '<div class="option"><span>' + questions[index].options[3] + '</span></div>';
+    que_text.innerHTML = que_tag; //adding new span tag inside que_tag
+    option_list.innerHTML = option_tag; //adding new div tag inside option_tag
+
+    const option = option_list.querySelectorAll(".option");
+
+    // set onclick attribute to all available options
+    for (i = 0; i < option.length; i++) {
+        option[i].setAttribute("onclick", "optionSelected(this)");
+    }
+}
+// creating the new div tags which for icons
+let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
+let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
+
+//if user clicked on option
+function optionSelected(answer) {
+    clearInterval(counter); //clear counter
+    clearInterval(counterLine); //clear counterLine
+    let userAns = answer.textContent; //getting user selected option
+    let correcAns = questions[que_count].answer; //getting correct answer from array
+    const allOptions = option_list.children.length; //getting all option items
+
+    if (userAns == correcAns) { //if user selected option is equal to array's correct answer
+        userScore += 1; //upgrading score value with 1
+        answer.classList.add("correct"); //adding green color to correct selected option
+        answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option
+        console.log("Correct Answer");
+        console.log("Your correct answers = " + userScore);
+    } else {
+        answer.classList.add("incorrect"); //adding red color to correct selected option
+        answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
+        console.log("Wrong Answer");
+
+        for (i = 0; i < allOptions; i++) {
+            if (option_list.children[i].textContent == correcAns) { //if there is an option which is matched to an array answer 
+                option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
+                option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
+                console.log("Auto selected correct answer.");
+            }
         }
-    }, 1000);
+    }
+    for (i = 0; i < allOptions; i++) {
+        option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
+    }
+    next_btn.classList.add("show"); //show the next button if user selected any option
 }
 
-startButton.addEventListener('click', beginQuiz);
+function showResult() {
+    info_box.classList.remove("activeInfo"); //hide info box
+    quiz_box.classList.remove("activeQuiz"); //hide quiz box
+    result_box.classList.add("activeResult"); //show result box
+    const scoreText = result_box.querySelector(".score_text");
+    const highScore = result_box.querySelector(".score_text");
+    if (userScore > 1) { // if user scored more than 3
+        //creating a new span tag and passing the user score number and total question number
+        let highTag = '<form id="score-form"> Save your highscore of ' + userScore + ". " + '<br> Enter your Initals: <br> <input type="text" name="initials" id="initials"> <button type="button" id="submit">Submit</button></form>';
+        highScore.innerHTML = highTag;
+
+    }
+    else { // if user scored less than 1
+        let scoreTag = '<span>and sorry , You got only <p>' + userScore + '</p> out of <p>' + questions.length + '</p></span>';
+        scoreText.innerHTML = scoreTag;
+
+    }
+    var submitButton = document.querySelector("#submit");
+    var initials = document.querySelector("#initials");
+
+    submitButton.addEventListener("click", function () {
+
+
+        var highscore = {
+            initials: initials.value.trim(),
+            score: userScore,
+        };
+        highscoreArray(highscore);
+
+    });
+
+}
+
+var scoreList = [];
+// save highscore to array
+var highscoreArray = function (userinfo) {
+    scoreList.push(userinfo);
+    console.log(scoreList);
+    localStorage.setItem("highscores", JSON.stringify(scoreList));
+}
+
+function startTimer(time) {
+    counter = setInterval(timer, 500);
+    function timer() {
+        timeCount.textContent = time; //changing the value of timeCount with time value
+        time--; //decrement the time value
+        timeValue = time;
+        if (time < 9) { //if timer is less than 9
+            let addZero = timeCount.textContent;
+            timeCount.textContent = "0" + addZero; //add a 0 before time value
+        }
+        if (time < 0) { //if timer is less than 0
+            clearInterval(counter); //clear counter
+            timeText.textContent = "Time Off"; //change the time text to time off
+            const allOptions = option_list.children.length; //getting all option items
+            let correcAns = questions[que_count].answer; //getting correct answer from array
+            for (i = 0; i < allOptions; i++) {
+                if (option_list.children[i].textContent == correcAns) { //if there is an option which is matched to an array answer
+                    option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
+                    option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
+                    console.log("Time Off: Auto selected correct answer.");
+                }
+            }
+            for (i = 0; i < allOptions; i++) {
+                option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
+            }
+            next_btn.classList.add("show"); //show the next button if user selected any option
+        }
+    }
+}
+
+
+function queCounter(index) {
+    //creating a new span tag and passing the question number and total question
+    let totalQueCounTag = '<span><p>' + index + '</p> of <p>' + questions.length + '</p> Questions</span>';
+    bottom_ques_counter.innerHTML = totalQueCounTag;  //adding new span tag inside bottom_ques_counter
+}
